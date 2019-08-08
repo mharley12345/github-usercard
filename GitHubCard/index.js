@@ -2,15 +2,34 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
+// axios.get('https://api.github.com/users/mharley12345')        
+// .then(response =>{
+//     //  cardCreator({response})
+//     console.log(response.data)
+//      response.data.forEach(obj=>{
+//       followersArray.push(obj)
+//      })
+   
+//      console.log(response)
 
-axios.get('https://api.github.com/users/mharley12345')        
+// }).catch(err =>{
+//   console.log(err)
+// })
+
+   axios.get(`https://api.github.com/users/mharley12345`)        
 .then(response =>{
-     cardCreator({response})
+    cardCreator({response})
+    console.log(response.data)
+
+      followersArray.push(response)
+     
+   
      console.log(response)
 
 }).catch(err =>{
   console.log(err)
 })
+
    
        
 /* Step 2: Inspect and study the data coming back, this is YOUR 
@@ -36,6 +55,7 @@ axios.get('https://api.github.com/users/mharley12345')
 
 const followersArray = [];
 
+
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
 
@@ -55,6 +75,8 @@ const followersArray = [];
 </div>
 
 */
+followersArray.push(`{tetondan},{dustinmyers},{justsml},{luishrd},{bigknell}`)
+console.log(followersArray)
 function cardCreator({response}){
   let cards = document.querySelector('.cards')
 
@@ -73,20 +95,36 @@ function cardCreator({response}){
   cardInfo.appendChild(name)
   let userName = document.createElement('p')
   userName.classList.add('username')
-  userName.textContent=`${response.data.userName}`
+  userName.textContent=`${response.data.login}`
   cardInfo.appendChild(userName)
   let location = document.createElement('p')
   location.classList.add('Location')
-  location.textContent='Location :' + `${response.data.location}`
+  location.textContent='Location : Seattle, Wa'
   cardInfo.appendChild(location)
   let profile = document.createElement('p')
   profile.classList.add('Profile')
-  profile.textContent="Profile :"
+  profile.textContent= "GitHub Profile : " 
+ 
   let profileLink = document.createElement('a')
+  profileLink.textContent= response.data.html_url
+  profileLink.href=response.data.html_url
 
-  profileLink.href="https://github.com/mharley12345"
+  profile.appendChild(profileLink)
+  
   cardInfo.appendChild(profile)
   profile.appendChild(profileLink)
+  let followers = document.createElement('p')
+  followers.classList.add('followers')
+  followers.textContent= "Followers: " + `${response.data.followers}`
+  profile.appendChild(followers)
+  let following = document.createElement('p')
+  following.classList.add('following')
+  following.textContent = "Following: " + `${response.data.following}`
+  profile.appendChild(following)
+  let bio = document.createElement('p')
+  bio.classList.add('bio')
+  bio.textContent="BIO: " + `${response.data.bio}`
+  profile.appendChild(bio)
 
 
 return card
