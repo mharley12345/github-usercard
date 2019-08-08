@@ -2,9 +2,15 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
-let data =
-   axios.get('https://api.github.com/users/mharley12345')
-   .then(response=>{console.log(response)})
+
+axios.get('https://api.github.com/users/mharley12345')        
+.then(response =>{
+     cardCreator({response})
+     console.log(response)
+
+}).catch(err =>{
+  console.log(err)
+})
    
        
 /* Step 2: Inspect and study the data coming back, this is YOUR 
@@ -49,6 +55,43 @@ const followersArray = [];
 </div>
 
 */
+function cardCreator({response}){
+  let cards = document.querySelector('.cards')
+
+  let card = document.createElement('div')
+  card.classList.add('card')
+  let image = document.createElement('img')
+  image.src = `${response.data.avatar_url}`
+  let cardInfo = document.createElement('div')
+  cardInfo.classList.add('card-info')
+  cards.appendChild(card)
+  card.appendChild(image)
+  card.appendChild(cardInfo)
+  let name = document.createElement('h3')
+  name.classList.add('name')
+  name.textContent=`${response.data.name}`
+  cardInfo.appendChild(name)
+  let userName = document.createElement('p')
+  userName.classList.add('username')
+  userName.textContent=`${response.data.userName}`
+  cardInfo.appendChild(userName)
+  let location = document.createElement('p')
+  location.classList.add('Location')
+  location.textContent='Location :' + `${response.data.location}`
+  cardInfo.appendChild(location)
+  let profile = document.createElement('p')
+  profile.classList.add('Profile')
+  profile.textContent="Profile :"
+  let profileLink = document.createElement('a')
+
+  profileLink.href="https://github.com/mharley12345"
+  cardInfo.appendChild(profile)
+  profile.appendChild(profileLink)
+
+
+return card
+}
+
 
 /* List of LS Instructors Github username's: 
   tetondan
