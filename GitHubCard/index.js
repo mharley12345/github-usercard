@@ -15,20 +15,35 @@
 // }).catch(err =>{
 //   console.log(err)
 // })
+const followersArray = ["mharley12345","tetondan",
+"dustinmyers",
+"justsml",
+"luishrd",
+"bigknell"];
+const cards = document.querySelector('.cards');
+ 
+followersArray.forEach(person =>{
+	axios.get(`https://api.github.com/users/${person}`)
+	.then(response => {
 
-   axios.get(`https://api.github.com/users/mharley12345`)        
-.then(response =>{
-    cardCreator({response})
-    console.log(response.data)
 
-      followersArray.push(response)
+cards.appendChild(cardCreator({response}))
+
+  })})
+
+//    axios.get(`https://api.github.com/users/mharley12345`)        
+// .then(response =>{
+//     cardCreator({response})
+//     console.log(response.data)
+
+//       followersArray.push(response)
      
    
-     console.log(response)
+//      console.log(response)
 
-}).catch(err =>{
-  console.log(err)
-})
+// }).catch(err =>{
+//   console.log(err)
+// })
 
    
        
@@ -53,8 +68,10 @@
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
 
+// followersArray.forEach(response=>{
+//   cards.appendChild(cardCreator({response}))
+// })
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -75,8 +92,8 @@ const followersArray = [];
 </div>
 
 */
-followersArray.push(`{tetondan},{dustinmyers},{justsml},{luishrd},{bigknell}`)
-console.log(followersArray)
+
+
 function cardCreator({response}){
   let cards = document.querySelector('.cards')
 
@@ -99,7 +116,7 @@ function cardCreator({response}){
   cardInfo.appendChild(userName)
   let location = document.createElement('p')
   location.classList.add('Location')
-  location.textContent='Location : Seattle, Wa'
+  location.textContent='Location :'+`${response.data.location}`
   cardInfo.appendChild(location)
   let profile = document.createElement('p')
   profile.classList.add('Profile')
